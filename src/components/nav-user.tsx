@@ -24,8 +24,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { getFileStorage } from "@/utils/get-file-storage";
+import { User } from "lucide-react";
 
 export function NavUser() {
   const session = useSession();
@@ -48,8 +49,8 @@ export function NavUser() {
                   )}
                   alt="avatar"
                 />
-                <AvatarFallback className="rounded-lg">
-                  {session.data?.user.fullName}
+                <AvatarFallback className="flex items-center justify-center rounded-lg bg-gray-200">
+                  <User className="h-4 w-4 text-gray-600" />
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -79,8 +80,8 @@ export function NavUser() {
                     )}
                     alt="avatar"
                   />
-                  <AvatarFallback className="rounded-lg">
-                    {session.data?.user.fullName}
+                  <AvatarFallback className="flex items-center justify-center rounded-lg bg-gray-200">
+                    <User className="h-4 w-4 text-gray-600" />
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -109,7 +110,7 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => signOut()}>
               <IconLogout />
               Log out
             </DropdownMenuItem>

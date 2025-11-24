@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { usePresignedQuery } from "@/hooks/usePresignedViewUrls";
 import type { DriverRequest } from "@/types/driver-request";
-import { FileText, Mail, MapPin, Phone, User } from "lucide-react";
+import { AlertCircle, FileText, Mail, MapPin, Phone, User } from "lucide-react";
 import { type FC, useMemo } from "react";
 
 interface DialogDetailsProps {
@@ -95,6 +95,23 @@ const DialogDetails: FC<DialogDetailsProps> = ({
         </DialogHeader>
 
         <div className="space-y-6 py-4">
+          {selectedRequest?.status === "REJECTED" && (
+            <div className="space-y-3 rounded-lg border border-red-200 bg-red-50 p-4">
+              <div className="flex items-center gap-2">
+                <AlertCircle className="h-5 w-5 text-red-600" />
+                <h2 className="font-semibold text-red-900">Request Rejected</h2>
+              </div>
+              <div>
+                <p className="mb-1 text-xs font-medium tracking-wide text-red-700 uppercase">
+                  Rejection Reason
+                </p>
+                <p className="text-sm text-red-800">
+                  {selectedRequest.rejectionReason || "No reason provided"}
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* User Info Section */}
           <div className="space-y-3">
             <h2 className="text-lg font-semibold text-gray-900">

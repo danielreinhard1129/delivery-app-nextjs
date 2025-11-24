@@ -3,19 +3,21 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import AvatarDropdown from "./avatar-dropdown";
 import Logo from "./logo";
-import { useSession } from "next-auth/react";
 
 const menuItems = [
-  { name: "Features", href: "#link" },
-  { name: "Pricing", href: "#link" },
-  { name: "About", href: "#link" },
+  { name: "Features", href: "/" },
+  { name: "Pricing", href: "/" },
+  { name: "About", href: "/" },
 ];
 
 const Navbar = () => {
   const session = useSession();
+
   const [menuState, setMenuState] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
@@ -39,17 +41,23 @@ const Navbar = () => {
       >
         <div className="container mx-auto px-4 md:px-0">
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0">
-            <div className="flex w-full justify-between gap-6 lg:w-auto">
+            <div className="flex w-full items-center justify-between gap-6 lg:w-auto">
               <Logo />
 
-              <button
-                onClick={() => setMenuState(!menuState)}
-                aria-label={menuState == true ? "Close Menu" : "Open Menu"}
-                className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
-              >
-                <Menu className="m-auto size-6 duration-200 in-data-[state=active]:scale-0 in-data-[state=active]:rotate-180 in-data-[state=active]:opacity-0" />
-                <X className="absolute inset-0 m-auto size-6 scale-0 -rotate-180 opacity-0 duration-200 in-data-[state=active]:scale-100 in-data-[state=active]:rotate-0 in-data-[state=active]:opacity-100" />
-              </button>
+              {session.status !== "authenticated" ? (
+                <button
+                  onClick={() => setMenuState(!menuState)}
+                  aria-label={menuState == true ? "Close Menu" : "Open Menu"}
+                  className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
+                >
+                  <Menu className="m-auto size-6 duration-200 in-data-[state=active]:scale-0 in-data-[state=active]:rotate-180 in-data-[state=active]:opacity-0" />
+                  <X className="absolute inset-0 m-auto size-6 scale-0 -rotate-180 opacity-0 duration-200 in-data-[state=active]:scale-100 in-data-[state=active]:rotate-0 in-data-[state=active]:opacity-100" />
+                </button>
+              ) : (
+                <div className="flex items-center lg:hidden">
+                  <AvatarDropdown />
+                </div>
+              )}
 
               {/* DESKTOP */}
               <div className="m-auto hidden size-fit lg:block">
@@ -83,17 +91,24 @@ const Navbar = () => {
                   ))}
                 </ul>
               </div>
+
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                <Button asChild variant="secondary" size="sm">
-                  <Link href="/login">
-                    <span>Sign In</span>
-                  </Link>
-                </Button>
-                <Button asChild size="sm">
-                  <Link href="/register">
-                    <span>Sign Up</span>
-                  </Link>
-                </Button>
+                {session.status !== "authenticated" ? (
+                  <>
+                    <Button asChild variant="secondary" size="sm">
+                      <Link href="/login">
+                        <span>Sign In</span>
+                      </Link>
+                    </Button>
+                    <Button asChild size="sm">
+                      <Link href="/register">
+                        <span>Sign Up</span>
+                      </Link>
+                    </Button>
+                  </>
+                ) : (
+                  <AvatarDropdown />
+                )}
               </div>
             </div>
           </div>

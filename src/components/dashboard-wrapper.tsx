@@ -13,7 +13,7 @@ const DashboardWrapper: FC<DashboardWrapperProps> = ({
   return (
     <SidebarInset>
       <SiteHeader breadcrumbLists={breadcrumbLists} />
-      {children}
+      <div className="">{children}</div>
     </SidebarInset>
   );
 };

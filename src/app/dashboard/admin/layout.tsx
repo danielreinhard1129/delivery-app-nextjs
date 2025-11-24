@@ -7,8 +7,13 @@ export default async function DashboardAdminLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
+  const role = session?.user?.role;
 
-  if (session?.user.role !== "SUPER_ADMIN") return redirect("/login");
+  if (!session) return redirect("/login");
+
+  if (role === "USER") return redirect("/");
+
+  if (role === "DRIVER") return redirect("/dashboard/driver");
 
   return <main>{children}</main>;
 }

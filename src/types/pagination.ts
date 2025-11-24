@@ -1,17 +1,46 @@
-export interface PaginationMeta {
+// For offset pagination
+export interface OffsetPaginationMeta {
+  hasNext: boolean;
+  hasPrevious: boolean;
   page: number;
   take: number;
   total: number;
 }
 
-export interface PageableResponse<T> {
-  data: T[];
-  meta: PaginationMeta;
-}
-
-export interface PaginationQueries {
+// Queries for offset pagination
+export interface OffsetPaginationQueries {
   take?: number;
   page?: number;
   sortBy?: string;
   sortOrder?: string;
+}
+
+// For cursor pagination
+export interface CursorPaginationMeta {
+  hasMore: boolean;
+  isFirstPage: boolean;
+  nextCursor: number | null;
+  prevCursor: number | null;
+}
+
+// Queries for cursor pagination
+export interface CursorPaginationQueries {
+  search?: string;
+  cursor?: number;
+  isPrevious?: boolean;
+  take?: number;
+}
+
+export type PaginationQueries =
+  | OffsetPaginationQueries
+  | CursorPaginationQueries;
+
+export interface PageableResponseOffset<T> {
+  data: T[];
+  meta: OffsetPaginationMeta;
+}
+
+export interface PageableResponseCursor<T> {
+  data: T[];
+  meta: CursorPaginationMeta;
 }

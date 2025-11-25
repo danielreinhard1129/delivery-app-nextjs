@@ -9,7 +9,6 @@ interface Payload {
   fullName: string;
   email: string;
   password: string;
-  role: string;
 }
 
 export const useRegister = () => {

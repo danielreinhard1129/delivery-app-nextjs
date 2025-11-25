@@ -8,8 +8,4 @@ export const registerSchema = z.object({
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters." }),
-
-  role: z.string().refine((val) => val === "USER" || val === "DRIVER", {
-    message: "Role must be either USER or DRIVER",
-  }),
 });

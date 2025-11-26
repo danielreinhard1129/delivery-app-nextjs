@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { usePresignedQuery } from "@/hooks/usePresignedViewUrls";
+import { usePresignedQuery } from "@/features/storage/api/usePresignedViewUrls";
 import type { DriverRequest } from "@/types/driver-request";
 import { AlertCircle, FileText, Mail, MapPin, Phone, User } from "lucide-react";
 import { type FC, useMemo } from "react";

@@ -1,10 +1,10 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import { Accept, useDropzone } from "react-dropzone";
-import { Upload, X, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { AlertCircle, CheckCircle2, Upload, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { Accept, useDropzone } from "react-dropzone";
 
 interface ImageUploadZoneProps {
   onFileSelect: (file: File | null) => void;
@@ -12,6 +12,7 @@ interface ImageUploadZoneProps {
   maxSize?: number;
   maxFiles?: number;
   label?: string;
+  onMountClear?: (fn: () => void) => void;
 }
 
 export function ImageUploadZone({
@@ -22,6 +23,7 @@ export function ImageUploadZone({
   },
   maxSize = 5 * 1024 * 1024, // 5MB
   label = "Klik atau seret file",
+  onMountClear,
 }: ImageUploadZoneProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -74,6 +76,12 @@ export function ImageUploadZone({
     setError(null);
     onFileSelect(null);
   };
+
+  useEffect(() => {
+    if (onMountClear) {
+      onMountClear(handleClear);
+    }
+  }, [onMountClear]);
 
   return (
     <div className="space-y-2">

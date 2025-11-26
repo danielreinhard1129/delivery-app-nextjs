@@ -12,7 +12,7 @@ export interface OffsetPaginationQueries {
   take?: number;
   page?: number;
   sortBy?: string;
-  sortOrder?: string;
+  sortOrder?: "DESC" | "ASC";
 }
 
 // For cursor pagination

@@ -19,8 +19,6 @@ export const usePresignedQuery = (keys: string[] | null) => {
         },
       );
 
-      console.log("isi data", data);
-
       return data;
     },
     enabled: !!keys && keys.length > 0 && !!session.data?.user.accessToken,

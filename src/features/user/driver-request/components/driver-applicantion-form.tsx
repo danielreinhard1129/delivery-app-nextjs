@@ -120,8 +120,6 @@ export function DriverApplicationForm() {
   return (
     <Card className="border-border border shadow-lg">
       <CardContent className="">
-        {/* CREATE HISTORY HERE */}
-
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {/* Personal Information Section */}
